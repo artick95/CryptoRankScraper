@@ -1,0 +1,38 @@
+User: willaim.jaxxson@ecodaw.com
+
+Zyte Smart Proxy Manager Key: b900e9f653464e23938c8dc9f51c0a89
+Zyte Scrapy Cloud Key: 4c210cbc255d48278ba5e367cb67f02d
+
+#Commands to deploy
+pip install shub
+shub login
+API key: 4c210cbc255d48278ba5e367cb67f02d
+shub deploy 564603
+
+
+pip install scrapy
+cd socialScraper/socialScraper/spiders
+rm *.json
+rm *.csv
+scrapy runspider socialscraperCryptoIDO.py -o res.json -o res.csv
+scrapy runspider telegramEnricher.py -o res.json -o res.csv
+
+
+
+##TW API
+
+
+API key
+X1DytC9zGihUp02milJ8mfcTO
+API Secret
+uNxX3FEnCYmn3p0gFNFoqKIeMm4kS4mPWOepNDL5V1TigNTZii
+
+Bearer Token
+AAAAAAAAAAAAAAAAAAAAAH%2F%2BJQEAAAAA1Jh0N5MBpUO6EnAwgE3Q%2FrQ6xEc%3DHJF5onP5l0Eb400rHCjVGiqm4ODWhSdv5hEEjrxlbOKE2RHZuJ
+
+
+Access Token
+98937372-CO62JQVSkgEhtuiDAGE1ft0dq42KnSleGoqSNdZ3S
+Access Secret Token
+5hCsXjdVlEFNKAcNDmac6zuYEmoerCMp2hNiZQJdLx7Xc
+
