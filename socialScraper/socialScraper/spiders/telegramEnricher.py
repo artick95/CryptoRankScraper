@@ -1,8 +1,8 @@
 
 import scrapy
 
-class telegramEnricher(scrapy.Spider):
-    name = "telegramEnricher"
+class telegramrEnricher(scrapy.Spider):
+    name = "telegramrEnricher"
     start_urls = [l.strip() for l in open('telegrams.txt').readlines()]
     def parse(self,response):
       data={  }

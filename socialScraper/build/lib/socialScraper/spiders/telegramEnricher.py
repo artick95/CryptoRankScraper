@@ -1,44 +1,26 @@
 
 import scrapy
 
-class telegramEnricher(scrapy.Spider):
-    name = "telegramEnricher"
-    start_urls = ['https://t.me/emergencycrypto']
-
-
-
+class telegramrEnricher(scrapy.Spider):
+    name = "telegramrEnricher"
+    start_urls = [l.strip() for l in open('telegrams.txt').readlines()]
     def parse(self,response):
       data={  }
       data['page'] = response.url
       try:
-            data['discord_urls'] = response.xpath('//a[contains(@href, "discord.gg")]/@href').extract()
+            data['telegram_name'] = response.css('div.tgme_page_title>span::text').get()
       except:
-            data['discord_urls'] = ''
+            data['telegram_name'] = ''
       try:
-            data['twitter_urls'] = response.xpath('//a[contains(@href, "twitter.com")]/@href').extract()
-      except:
-            data['twitter_urls'] = ''
-      try:
-            data['telegram_urls'] = response.xpath('//a[contains(@href, "t.me")]/@href').extract()
-      except:
-            data['telegram_urls'] = ''
-      try:
-            data['ticktok_urls'] = response.xpath('//a[contains(@href, "tiktok.com")]/@href').extract()
-      except:
-            data['ticktok_urls'] = ''
-      try:
-            data['instagram_urls'] = response.xpath('//a[contains(@href, "instagram.com")]/@href').extract()
-      except:
-            data['instagram_urls'] = ''
-      try:
-            data['youtube_urls'] = response.xpath('//a[contains(@href, "youtube.com")]/@href').extract()
-      except:
-            data['youtube_urls'] = ''
-      try:
-            data['whitepaper'] = response.xpath('//a[contains(@href, "whitepaper.pdf")]/@href').extract()
-      except:
-            data['whitepaper'] = ''
-    
-    
+            if "members" in response.css('div.tgme_page_extra::text').get():
+              data['telegram_members_count'] = response.css('div.tgme_page_extra::text').get().split(', ')[0].split(' members')[0].replace(' ','')
+              data['telegram_OnlineMembers_count'] = response.css('div.tgme_page_extra::text').get().split(', ')[1].split(' online')[0].replace(' ','')
 
+            if "subscribers" in response.css('div.tgme_page_extra::text').get():
+              data['telegram_members_count'] = response.css('div.tgme_page_extra::text').get().split(', ')[0].split(' subscribers')[0].replace(' ','')
+              data['telegram_OnlineMembers_count'] ="announcemenet channel"
+    
+      except:
+            data['telegram_members_count'] = ''
+            data['telegram_OnlineMembers_count']=''
       yield data   

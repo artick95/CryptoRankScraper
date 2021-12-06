@@ -4,18 +4,34 @@ Zyte Smart Proxy Manager Key: b900e9f653464e23938c8dc9f51c0a89
 Zyte Scrapy Cloud Key: 4c210cbc255d48278ba5e367cb67f02d
 
 #Commands to deploy
+cd socialScraper
 pip install shub
 shub login
-API key: 4c210cbc255d48278ba5e367cb67f02d
+4c210cbc255d48278ba5e367cb67f02d
 shub deploy 564603
 
-
+#IDO ENRICHING COMMANDS
 pip install scrapy
 cd socialScraper/socialScraper/spiders
 rm *.json
 rm *.csv
-scrapy runspider socialscraperCryptoIDO.py -o res.json -o res.csv
+scrapy runspider idoEnricher.py -o res.json -o res.csv
+
+#Telegram ENRICHING COMMANDS
+pip install scrapy
+cd socialScraper/socialScraper/spiders
+rm *.json
+rm *.csv
 scrapy runspider telegramEnricher.py -o res.json -o res.csv
+
+
+
+#Twitter ENRICHING COMMANDS
+pip install scrapy
+cd socialScraper/socialScraper/spiders
+rm *.json
+rm *.csv
+scrapy runspider twitterEnricher.py -o res.json -o res.csv
 
 
 
