@@ -7,6 +7,7 @@ class telegramrEnricher(scrapy.Spider):
     def parse(self,response):
       data={  }
       data['page'] = response.url
+      data['description']= response.css('div.tgme_page_description::text').get()
       try:
             data['telegram_name'] = response.css('div.tgme_page_title>span::text').get()
       except:
@@ -18,7 +19,7 @@ class telegramrEnricher(scrapy.Spider):
 
             if "subscribers" in response.css('div.tgme_page_extra::text').get():
               data['telegram_members_count'] = response.css('div.tgme_page_extra::text').get().split(', ')[0].split(' subscribers')[0].replace(' ','')
-              data['telegram_OnlineMembers_count'] ="announcemenet channel"
+              data['telegram_OnlineMembers_count'] ="0.01"
     
       except:
             data['telegram_members_count'] = ''

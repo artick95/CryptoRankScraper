@@ -1,21 +1,40 @@
-
-
 import scrapy
+from pandas import *
+ 
+# reading CSV file
+data = read_csv("https://rss.app/feeds/YsCY0cZumXPuPMhN.csv")
 
-class idoEnricher(scrapy.Spider):
+# converting column data to list
+newUrls = data['Link'].tolist()
+start_urls = [l.strip() for l in open('cryptoRankPages.txt').readlines()]
+start_urls=newUrls+ start_urls
+
+
+class cryptorank(scrapy.Spider):
     
-    name = "idoEnricher"
+    name = "cryptorank"
     user_agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-    start_urls = [l.strip() for l in open('urls.txt').readlines()]
+    #start_urls = [l.strip() for l in open('cryptoRankPages.txt').readlines()]
+    start_urls = start_urls
+ 
+
 
 
     def parse(self,response):
       data={  }
       data['page'] = response.url
-      data['responseStatus']=response.status
-      data['metaDescription']= response.xpath("//meta[@name='description']/@content").get()
-      data['loadingTime']=response.meta['download_latency']
-      data['H1']= response.xpath('//h1//text()').extract_first()
+      try:
+            data['website'] = response.css('div.coin-info__CoinIconLinksBlock-sc-ag81st-0>a::attr(href)').get()
+      except:
+            data['website'] = ''    
+
+            
+      try:
+        data['ROI']=response.css('div.columns__Column-sc-1g8p74z-1>div::text').extract()[3].split("x")[0]
+      except:
+        data['ROI']=""
+
+
       try:
             data['discord_urls'] = response.xpath('//a[contains(@href, "discord.gg/")]/@href').get()
       except:
@@ -30,8 +49,6 @@ class idoEnricher(scrapy.Spider):
                 data['telegram_urls']=""
             if "announcement" in data['telegram_urls']:
                 data['telegram_urls']=""
-
-
       except:
             data['telegram_urls'] = ''
       try:
@@ -81,10 +98,6 @@ class idoEnricher(scrapy.Spider):
             data['email']= response.xpath('//a[contains(@href, "mailto")]/@href').get().split(':')[1]      
       except:
              data['email']=""
-
-
-    
-
     
 
       yield data   

@@ -17,18 +17,18 @@ NEWSPIDER_MODULE = 'socialScraper.spiders'
 #USER_AGENT = 'socialScraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+#ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 1
+#CONCURRENT_REQUESTS = 1
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1
+#DOWNLOAD_DELAY = 1
 # The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 1
-CONCURRENT_REQUESTS_PER_IP = 1
+#CONCURRENT_REQUESTS_PER_DOMAIN = 1
+#CONCURRENT_REQUESTS_PER_IP = 1
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
@@ -37,11 +37,11 @@ CONCURRENT_REQUESTS_PER_IP = 1
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-DEFAULT_REQUEST_HEADERS = {
-   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-   'Accept-Language': 'en',
-   'authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAAH%2F%2BJQEAAAAA1Jh0N5MBpUO6EnAwgE3Q%2FrQ6xEc%3DHJF5onP5l0Eb400rHCjVGiqm4ODWhSdv5hEEjrxlbOKE2RHZuJ',
-}
+#DEFAULT_REQUEST_HEADERS = {
+ #  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  # 'Accept-Language': 'en',
+   #'authorization': 'Bearer #AAAAAAAAAAAAAAAAAAAAAH%2F%2BJQEAAAAA1Jh0N5MBpUO6EnAwgE3Q%2FrQ6xEc%3DHJF5onP5l0Eb400rHCjVGiqm4ODW#hSdv5hEEjrxlbOKE2RHZuJ',
+#}
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
@@ -69,7 +69,7 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-#AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 #AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
@@ -87,3 +87,24 @@ DEFAULT_REQUEST_HEADERS = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+AWS_ACCESS_KEY_ID = 'AKIAQ7SRJ2A7DUHMUG6H'
+AWS_SECRET_ACCESS_KEY='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'
+
+FEEDS = {
+    's3://cryptorank/cryptorankEnriched.csv': {
+        'format': 'csv',
+        'encoding': 'utf8',
+        'store_empty': False,
+        'indent': 4,
+    }
+}
+
+
+ITEM_PIPELINE = {
+'scrapy.pipelines.files.S3FilesStore': 1
+}
+
+
+FILES_STORE='s3://cryptorank/cryptorankEnriched.csv'
