@@ -1,5 +1,9 @@
 import scrapy
 from pandas import *
+
+from urllib.parse import urlparse
+
+
  
 # reading CSV file
 data = read_csv("https://rss.app/feeds/YsCY0cZumXPuPMhN.csv")
@@ -7,7 +11,17 @@ data = read_csv("https://rss.app/feeds/YsCY0cZumXPuPMhN.csv")
 # converting column data to list
 newUrls = data['Link'].tolist()
 start_urls = [l.strip() for l in open('cryptoRankPages.txt').readlines()]
-start_urls=newUrls+ start_urls
+start_urls=newUrls + start_urls
+
+#removing duplicates
+start_urls=list(dict.fromkeys(start_urls))
+
+f = open("cryptoRankPages.txt",'w')
+
+for element in start_urls:
+    f.write(element + "\n")
+f.close()
+
 
 
 class cryptorank(scrapy.Spider):
@@ -17,18 +31,27 @@ class cryptorank(scrapy.Spider):
     #start_urls = [l.strip() for l in open('cryptoRankPages.txt').readlines()]
     start_urls = start_urls
  
-
-
-
+ 
     def parse(self,response):
       data={  }
       data['page'] = response.url
       try:
-            data['website'] = response.css('div.coin-info__CoinIconLinksBlock-sc-ag81st-0>a::attr(href)').get()
+            data['website']=response.css('div.coin-info__CoinIconLinksBlock-sc-ag81st-0>a::attr(href)').get()
+            data['domain'] = urlparse(data['website']).netloc.split('www.')[1]
       except:
-            data['website'] = ''    
+            data['website'] = '' 
+            data['domain']=''   
 
-            
+      try:
+            data['IXOprice'] = response.css('div.columns__Column-sc-1g8p74z-1>div::text').get().split('$ ')[1]
+      except:
+            data['IXOprice'] = '' 
+
+      try:
+            data['currentPrice'] = response.css('div.styled__CoinPrice-sc-9jm877-5::text').get().split('USD ')[1]
+      except:
+            data['currentPrice'] = '' 
+
       try:
         data['ROI']=response.css('div.columns__Column-sc-1g8p74z-1>div::text').extract()[3].split("x")[0]
       except:
@@ -70,34 +93,13 @@ class cryptorank(scrapy.Spider):
       try:
             data['github_urls'] = response.xpath('//a[contains(@href, "github.com/")]/@href').get()
       except:
-            data['github_urls'] = ''
-      try:
-            data['whitepaper'] =  response.xpath('//a[contains(@href, "whitepaper.pdf")]/@href').extract()
-            data['litepaper'] =  response.xpath('//a[contains(@href, "litepaper.pdf")]/@href').extract()
-            data['tokenomics'] =  response.xpath('//a[contains(@href, "tokenomics.pdf")]/@href').extract()
-            data['deck'] =  response.xpath('//a[contains(@href, "deck.pdf")]/@href').extract()
-            data['pitch'] =  response.xpath('//a[contains(@href, "pitch.pdf")]/@href').extract()
-            data['pitchdeck'] =  response.xpath('//a[contains(@href, "pitchdeck.pdf")]/@href').extract()
-            data['presentation'] =  response.xpath('//a[contains(@href, "presentation.pdf")]/@href').extract()            
-
-      except:
-            data['whitepaper'] = ''
-            data['whitepaper'] =  ''
-            data['litepaper'] =  ''
-            data['tokenomics'] =  ''
-            data['deck'] =  ''
-            data['pitch'] =   ''
-            data['pitchdeck'] =   ''
-            data['presentation'] =  ''           
+            data['github_urls'] = ''       
 
       try:
             data['linkedin_urls'] =  response.xpath('//a[contains(@href, "linkedin.com/")]/@href').extract()            
       except:
             data['linkedin_urls'] = ''
-      try:
-            data['email']= response.xpath('//a[contains(@href, "mailto")]/@href').get().split(':')[1]      
-      except:
-             data['email']=""
+
     
 
       yield data   
