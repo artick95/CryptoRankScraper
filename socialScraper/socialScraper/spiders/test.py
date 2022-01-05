@@ -20,5 +20,11 @@ f.close()
 
 from urllib.parse import urlparse
 
-domain = urlparse('https://www.battlesaga.io?utm_source=cryptorank').netloc.split('www.')[1]
+domain = urlparse('https://ertha.io?utm_source=cryptorank').netloc
+
+if "www." in domain:
+  domain = domain.split('www.')[1]
+
+
+
 print(domain) # --> www.example.test

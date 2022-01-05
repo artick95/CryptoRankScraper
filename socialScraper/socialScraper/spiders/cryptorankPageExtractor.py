@@ -34,12 +34,23 @@ class cryptorank(scrapy.Spider):
  
     def parse(self,response):
       data={  }
+      data['domain']=''
+      
       data['page'] = response.url
       try:
             data['website']=response.css('div.coin-info__CoinIconLinksBlock-sc-ag81st-0>a::attr(href)').get()
-            data['domain'] = urlparse(data['website']).netloc.split('www.')[1]
       except:
             data['website'] = '' 
+
+
+      try:
+        data['domain'] = urlparse(data['website']).netloc
+
+        #correction to remove www
+        if "www." in data['domain']:
+          data['domain'] = urlparse(data['website']).netloc.split('www.')[1]
+
+      except:
             data['domain']=''   
 
       try:
