@@ -87,24 +87,3 @@ AUTOTHROTTLE_ENABLED = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-
-AWS_ACCESS_KEY_ID = 'AKIAQ7SRJ2A7DUHMUG6H'
-AWS_SECRET_ACCESS_KEY='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'
-
-FEEDS = {
-    's3://cryptorank/cryptorankEnriched.csv': {
-        'format': 'csv',
-        'encoding': 'utf8',
-        'store_empty': False,
-        'indent': 4,
-    }
-}
-
-
-ITEM_PIPELINE = {
-'scrapy.pipelines.files.S3FilesStore': 1
-}
-
-
-FILES_STORE='s3://cryptorank/cryptorankEnriched.csv'

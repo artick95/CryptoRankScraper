@@ -2,9 +2,11 @@ import scrapy
 
 
 
+
 class twitterEnricher(scrapy.Spider):
     name = "twitterEnricher"
     #start_urls="https://api.twitter.com/1.1/users/lookup.json?screen_name=Centaurify"
+
     start_urls = [l.strip() for l in open('strangeTwitter.txt').readlines()]
     
     headers = {

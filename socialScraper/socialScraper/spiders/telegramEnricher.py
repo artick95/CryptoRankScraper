@@ -1,5 +1,21 @@
-
 import scrapy
+import boto3
+
+from airscraper import AirScraper
+
+url='https://airtable.com/shrwFxXFcO55sAIGb'
+
+client = AirScraper(url)
+data = client.get_table()
+
+# save as file
+with open('twitterFeed.csv','w') as f:
+  f.write(data)
+
+with open('twitterFeed.csv','w') as f:
+  f.write(data)
+
+
 
 class telegramrEnricher(scrapy.Spider):
     name = "telegramrEnricher"
@@ -25,3 +41,6 @@ class telegramrEnricher(scrapy.Spider):
             data['telegram_members_count'] = ''
             data['telegram_OnlineMembers_count']=''
       yield data   
+
+
+

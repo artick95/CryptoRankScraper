@@ -2,10 +2,10 @@ import scrapy
 from pandas import *
  
 # reading CSV file
-data = read_csv("https://rss.app/feeds/YsCY0cZumXPuPMhN.csv")
+data = read_csv("https://cryptorank.s3.us-east-2.amazonaws.com/newsfeedcryptorank.csv")
 
 # converting column data to list
-newUrls = data['Link'].tolist()
+newUrls = data['links'].tolist()
 start_urls = [l.strip() for l in open('test.txt').readlines()]
 start_urls=newUrls + start_urls
 start_urls=list(dict.fromkeys(start_urls))

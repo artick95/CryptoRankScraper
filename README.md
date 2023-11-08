@@ -1,16 +1,3 @@
-
-**CryptoRank Pages ENRICHING COMMANDS**
-```
-pip install scrapy  
-pip install botocore
-cd socialScraper/socialScraper/spiders
-rm cryptorankEnriched.json
-rm cryptorankEnriched.csv
-scrapy runspider cryptorankPageExtractor.py -o cryptorankEnriched.json -o cryptorankEnriched.csv
-```
-
-
-
 **IDO ENRICHING COMMANDS**
 ```
 pip install scrapy  
@@ -19,6 +6,7 @@ rm socials.json
 rm socials.csv
 scrapy runspider idoEnricher.py -o socials.json -o socials.csv
 ```
+
 
 **TELEGRAM ENRICHING COMMANDS**
 ```

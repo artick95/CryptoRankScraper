@@ -81,10 +81,4 @@ class idoEnricher(scrapy.Spider):
             data['email']= response.xpath('//a[contains(@href, "mailto")]/@href').get().split(':')[1]      
       except:
              data['email']=""
-
-
-    
-
-    
-
       yield data   

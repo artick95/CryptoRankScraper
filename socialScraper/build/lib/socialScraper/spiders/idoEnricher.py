@@ -26,6 +26,12 @@ class idoEnricher(scrapy.Spider):
             data['twitter_urls'] = ''
       try:
             data['telegram_urls'] = response.xpath('//a[contains(@href, "t.me/")]/@href').get()
+            if "join" in data['telegram_urls']:
+                data['telegram_urls']=""
+            if "announcement" in data['telegram_urls']:
+                data['telegram_urls']=""
+
+
       except:
             data['telegram_urls'] = ''
       try:

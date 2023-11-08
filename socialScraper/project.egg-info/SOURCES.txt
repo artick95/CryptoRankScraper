@@ -10,9 +10,11 @@ socialScraper/middlewares.py
 socialScraper/pipelines.py
 socialScraper/settings.py
 socialScraper/spiders/__init__.py
-socialScraper/spiders/generalEnricher.py
+socialScraper/spiders/cryptorankListing.py
+socialScraper/spiders/cryptorankPageExtractor.py
 socialScraper/spiders/idoEnricher.py
 socialScraper/spiders/telegramEnricher.py
+socialScraper/spiders/test.py
 socialScraper/spiders/twitterEnricher.py
 socialScraper/spiders/twitterEnricherImproved.py
 socialScraper/spiders/twitterStrange.py
