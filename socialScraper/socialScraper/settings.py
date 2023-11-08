@@ -11,13 +11,23 @@ BOT_NAME = 'socialScraper'
 
 SPIDER_MODULES = ['socialScraper.spiders']
 NEWSPIDER_MODULE = 'socialScraper.spiders'
+
+
+
+# enable the middleware
+#DOWNLOADER_MIDDLEWARES = {'scrapy_zyte_smartproxy.ZyteSmartProxyMiddleware': 610}
+# enable Zyte Proxy
+#ZYTE_SMARTPROXY_ENABLED = True
+# the APIkey you get with your subscription
+#ZYTE_SMARTPROXY_APIKEY = '<your_zyte_proxy_apikey>'
+
 #
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'socialScraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-#ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 1

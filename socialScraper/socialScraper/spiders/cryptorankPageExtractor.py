@@ -4,34 +4,12 @@ from pandas import *
 from urllib.parse import urlparse
 
 
- 
-# reading CSV file
-#data = read_csv("https://rss.app/feeds/YsCY0cZumXPuPMhN.csv")
-data = read_csv("https://cryptorank.s3.us-east-2.amazonaws.com/newsfeedcryptorank.csv")
-
-# converting column data to list
-newUrls = data['links'].tolist()
-start_urls = [l.strip() for l in open('cryptoRankPages.txt').readlines()]
-start_urls=newUrls + start_urls
-
-#removing duplicates
-start_urls=list(dict.fromkeys(start_urls))
-
-f = open("cryptoRankPages.txt",'w')
-
-for element in start_urls:
-    f.write(element + "\n")
-f.close()
-
-
 
 class cryptorank(scrapy.Spider):
     
     name = "cryptorank"
     user_agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-    #start_urls = [l.strip() for l in open('cryptoRankPages.txt').readlines()]
-    start_urls = start_urls
- 
+    start_urls = list(dict.fromkeys([l.strip() for l in open('cryptoRankPages.txt').readlines()])) 
  
     def parse(self,response):
       data={  }
@@ -39,7 +17,8 @@ class cryptorank(scrapy.Spider):
       
       data['page'] = response.url
       try:
-            data['website']=response.css('div.coin-info__CoinIconLinksBlock-sc-ag81st-0>a::attr(href)').get()
+            data['website']=response.xpath('//p[text()="Socials"]/following-sibling::div[1]/a[1]/@href').get()
+
       except:
             data['website'] = '' 
 
